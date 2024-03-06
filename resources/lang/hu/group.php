@@ -61,7 +61,7 @@ return [
     'need_approval' => 'Jóváhagyás szükséges',
     'need_approval_help' => 'Igen esetén minden jelentkezést külön el kell fogadni.',
     'auto_approval' => 'Automatikus jóváhagyás',
-    'auto_approval_help' => 'Ha a jelentkezők létszáma eléri a minimum létszámot, akkor automatikusan fogadja el a jelentkezéseket.',
+    'auto_approval_help' => 'Ha a jelentkezők létszáma eléri a minimum létszámot, akkor automatikusan fogadja el a jelentkezéseket. (Csak abban az esetben, ha a jelentkező szolgálati ideje megegyezik egy másik jelentkező szolgálati idejével).',
     'auto_back' => 'Automatikus státusz-visszaállítás',
     'auto_back_help' => 'Ha a jelentkezés már el lett fogadva, de a létszám visszaesik a minimum szám alá (pl. törli valaki a jelentkezését), akkor a már elfogadott jelentkezéseket is állítsa vissza "elfogadásra vár" státuszra.',
     'days_head' => 'Szolgálati napok',
