@@ -67,7 +67,7 @@
                     </div>
                 </div>
                 <div class="row">
-                <div class="col-sm-8">
+                <div class="col-md-6">
                     @if (config('settings_terms_checkbox') == 1)
                         <div class="icheck-primary">
                             <input id="agreeTerms" class="@error('terms') is-invalid @enderror" name="terms" type="checkbox" value="yes">
@@ -79,7 +79,7 @@
                     @endif
                 </div>
                 <!-- /.col -->
-                <div class="col-sm-4">
+                <div class="col-md-6">
                     <button type="submit" class="btn btn-primary btn-block">
                         <i class="far fa-check-circle mr-1"></i>
                         {{__('user.finish.button')}}</button>
