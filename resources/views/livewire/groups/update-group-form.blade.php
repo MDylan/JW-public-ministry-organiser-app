@@ -13,7 +13,7 @@
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{{route('home.home')}}">{{ __('app.menu-home') }}</a></li>
                 <li class="breadcrumb-item"><a href="{{route('groups')}}">{{ __('app.menu-groups') }}</a></li>
-                <li class="breadcrumb-item active">{{ __('group.addNew') }}</li>
+                <li class="breadcrumb-item active">{{ __('group.editGroup') }}</li>
             </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
