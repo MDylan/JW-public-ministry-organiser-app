@@ -108,13 +108,14 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     protected $gdprAnonymizableFields = [
         'email',
         'name' => 'Anonym',
-        'phone_number' => '',
+        'phone_number'  => null,
         'role' => 'registered',
-        'last_login_ip' => '',
+        'last_login_ip' => null,
         'isAnonymized' => 1,
-        'opted_out_of_notifications' => '',
-        'show_fields' => '',
-        'congregation' => '',
+        'opted_out_of_notifications' => null,
+        'show_fields' => null,
+        'congregation' => null,
+        'firstDay' => null,
     ];
 
 
