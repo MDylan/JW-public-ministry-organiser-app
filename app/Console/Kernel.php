@@ -69,6 +69,7 @@ class Kernel extends ConsoleKernel
             $users = User::where('last_activity', '<=', carbon::now()
                     ->submonths(config('gdpr.settings.ttl')))
                     ->where('isAnonymized', 0)
+                    ->whereNotIn('role', ['mainAdmin', 'groupCreator'])
                     ->get();
             foreach ($users as $user) {
                 \App\Models\GroupUser::where('user_id', $user->id)->delete();
@@ -88,6 +89,7 @@ class Kernel extends ConsoleKernel
             $anonymizableUsers = $user::where('last_activity', '!=', null)
                                 ->where('isAnonymized', 0)
                                 ->where('last_activity', '<=', $date)
+                                ->whereNotIn('role', ['mainAdmin', 'groupCreator'])
                                 ->get();
     
             foreach ($anonymizableUsers as $user) {
@@ -126,6 +128,7 @@ class Kernel extends ConsoleKernel
                                 ->where('U.last_activity', '!=', null)
                                 ->where('U.isAnonymized', 0)
                                 ->whereBetween('U.last_activity', [$maxDate->format("Y-m-d"), $minDate->format("Y-m-d")])
+                                ->whereNotIn('U.role', ['mainAdmin', 'groupCreator'])
                                 // ->where('U.last_activity', '<=', $minDate->format("Y-m-d"))
                             ->get();
             foreach ($anonymizableUsers as $user) {
