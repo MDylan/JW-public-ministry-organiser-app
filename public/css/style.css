@@ -328,6 +328,9 @@
   .dark-mode .grid-row:hover {
     background-color: hsl(55, 21%, 44%);
   }
+  .dark-mode .row:hover a {
+    color: #fff
+  }
   .eventsTable tr {
     height: 46px;
   }
