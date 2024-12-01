@@ -113,7 +113,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        @if ($state['need_approval'] == 1)
+                                        @if ($state['need_approval'] == 2) 
+                                        {{-- Disabled for a future function --}}
                                             <div class="row alert alert-light">
                                                 <div class="col-12">
                                                     <div class="form-group">

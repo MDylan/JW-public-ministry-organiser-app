@@ -2,7 +2,7 @@
 
 namespace App\Observers;
 
-use App\Jobs\EventAutoCheck;
+// use App\Jobs\EventAutoCheck;
 use App\Models\Event;
 use App\Models\Group;
 use App\Models\LogHistory;
@@ -54,9 +54,9 @@ class EventObserver
             );
         }
 
-        if($event->groups->need_approval && $event->groups->auto_approval) {
-            EventAutoCheck::dispatch($event);
-        }
+        // if($event->groups->need_approval && $event->groups->auto_approval) {
+        //     EventAutoCheck::dispatch($event, $event->start, $event->end);
+        // }
     }
 
     /**
@@ -139,6 +139,11 @@ class EventObserver
                 $us->notify(
                     new EventStatusChangedNotification($data)
                 );
+
+                // if ($event->groups->need_approval && $event->groups->auto_approval) {
+                //     EventAutoCheck::dispatch($event, $event->start, $event->end);
+                // }
+
                 if($event->status == 1) {
                     //accept this event, delete in other groups
                     Event::where('status', '=', 0)
