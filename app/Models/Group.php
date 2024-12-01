@@ -68,6 +68,7 @@ class Group extends Model
                         ->withPivot('id', 'group_role', 'note', 'accepted_at', 'hidden', 'deleted_at', 'signs', 'message_use', 'message_send_priority')
                         ->withTimestamps()
                         ->whereNull('deleted_at')
+                        ->where('isAnonymized', 0)
                         ->using(GroupUser::class)
                         ->orderByRaw('name_index, email');
     }
@@ -94,6 +95,7 @@ class Group extends Model
     public function users() {
         return $this->belongsToMany(User::class)
                         ->select(['users.id', 'users.name'])
+                        ->where('isAnonymized', 0)
                         ->withPivot('group_role', 'signs')
                         ->wherePivot('deleted_at', null)
                         ->whereNotNull('accepted_at')
