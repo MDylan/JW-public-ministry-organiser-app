@@ -124,7 +124,7 @@ if(!function_exists('pwbs_weather_api_call')) {
                     // dd("na");
                     // dd($weather_data);
                     //update monthly usage value
-                    Settings::updateOrInsert(
+                    Settings::updateOrCreate(
                         [
                             'name' => 'weather_monthly_call'
                         ],
