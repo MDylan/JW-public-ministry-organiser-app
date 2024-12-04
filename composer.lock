@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1bfca3b692c3bb4a546cf3a4ff87c858",
+    "content-hash": "560de2211952889572054636699f5217",
     "packages": [
         {
             "name": "astrotomic/laravel-translatable",
@@ -3388,6 +3388,66 @@
                 "source": "https://github.com/pietrocinaglia/laraupdater/tree/master"
             },
             "time": "2018-12-03T12:08:48+00:00"
+        },
+        {
+            "name": "petercoles/multilingual-country-list",
+            "version": "1.2.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/petercoles/Multilingual-Country-List.git",
+                "reference": "00d60aecb848c3ae8b3becf5828cc069b9d2b19b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/petercoles/Multilingual-Country-List/zipball/00d60aecb848c3ae8b3becf5828cc069b9d2b19b",
+                "reference": "00d60aecb848c3ae8b3becf5828cc069b9d2b19b",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5|~6|~7|~8|~9|~10|~11",
+                "php": ">=7.4"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1",
+                "phpunit/phpunit": ">=9 <10"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "Countries": "PeterColes\\Countries\\CountriesFacade"
+                    },
+                    "providers": [
+                        "PeterColes\\Countries\\CountriesServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PeterColes\\Countries\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Peter Coles",
+                    "email": "peterdcoles@gmail.com",
+                    "homepage": "https://petercoles.com"
+                }
+            ],
+            "description": "Lookup Objects for ISO 3166 Country Names and Codes",
+            "homepage": "https://github.com/petercoles/multilingualcountry-list",
+            "keywords": [
+                "ISO 3166",
+                "country codes",
+                "country lists",
+                "country lookup",
+                "laravel"
+            ],
+            "time": "2024-03-13T16:50:27+00:00"
         },
         {
             "name": "phpoption/phpoption",

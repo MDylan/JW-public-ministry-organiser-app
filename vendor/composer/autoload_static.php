@@ -119,6 +119,7 @@ class ComposerStaticInitf340f709f19a7301b5187bb263eef7c3
             'PragmaRX\\Google2FA\\' => 19,
             'PhpParser\\' => 10,
             'PhpOption\\' => 10,
+            'PeterColes\\Countries\\' => 21,
             'ParagonIE\\ConstantTime\\' => 23,
         ),
         'O' => 
@@ -438,6 +439,10 @@ class ComposerStaticInitf340f709f19a7301b5187bb263eef7c3
         'PhpOption\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
+        ),
+        'PeterColes\\Countries\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/petercoles/multilingual-country-list/src',
         ),
         'ParagonIE\\ConstantTime\\' => 
         array (
@@ -4876,6 +4881,9 @@ class ComposerStaticInitf340f709f19a7301b5187bb263eef7c3
         'ParagonIE\\ConstantTime\\Encoding' => __DIR__ . '/..' . '/paragonie/constant_time_encoding/src/Encoding.php',
         'ParagonIE\\ConstantTime\\Hex' => __DIR__ . '/..' . '/paragonie/constant_time_encoding/src/Hex.php',
         'ParagonIE\\ConstantTime\\RFC4648' => __DIR__ . '/..' . '/paragonie/constant_time_encoding/src/RFC4648.php',
+        'PeterColes\\Countries\\CountriesFacade' => __DIR__ . '/..' . '/petercoles/multilingual-country-list/src/CountriesFacade.php',
+        'PeterColes\\Countries\\CountriesServiceProvider' => __DIR__ . '/..' . '/petercoles/multilingual-country-list/src/CountriesServiceProvider.php',
+        'PeterColes\\Countries\\Maker' => __DIR__ . '/..' . '/petercoles/multilingual-country-list/src/Maker.php',
         'PharIo\\Manifest\\Application' => __DIR__ . '/..' . '/phar-io/manifest/src/values/Application.php',
         'PharIo\\Manifest\\ApplicationName' => __DIR__ . '/..' . '/phar-io/manifest/src/values/ApplicationName.php',
         'PharIo\\Manifest\\Author' => __DIR__ . '/..' . '/phar-io/manifest/src/values/Author.php',
