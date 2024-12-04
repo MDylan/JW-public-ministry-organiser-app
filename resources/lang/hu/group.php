@@ -347,7 +347,7 @@ return [
         'country' => 'Ország',
         'error' => 'Hiba az időjárás előrejelzés beállításakor.',
         'error_message' => 'Kérlek add meg a várost és az országot is.',
-        'error_weather_message' => 'Hiba történt az időjárás előrejelzés lekérésekor, próbáld meg később.',
+        'error_weather_message' => 'Hiba történt az időjárás előrejelzés lekérésekor, ellenőrizd az adatokat és próbáld újra.',
         'humidity' => 'Páratartalom',
         'no_data' => 'Nincs elérhető adat',
         'too_many_requests' => 'Túl sok próbálkozás, kérlek várj 15 percet.',

@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
+use Countries;
 
 class UpdateGroupForm extends AppComponent
 {
@@ -572,9 +573,12 @@ class UpdateGroupForm extends AppComponent
                 }
             }
         }
-        
-        // if(count($this->dates))
-        //     ksort($this->dates);
+
+        // $countries = new \PeterColes\Countries\Maker();
+        // $countries->lookup(auth()->user()->language);
+
+        $countries = Countries::lookup(auth()->user()->language);
+        // dd($countries);
 
         return view('livewire.groups.update-group-form', [
             'min_time_options' => [30, 60, 90, 120],
@@ -586,7 +590,10 @@ class UpdateGroupForm extends AppComponent
                 'helper',
                 'roler',
                 'admin',
-            ]
+            ],
+            'countries' => $countries,
+            'default_country' => $this->weather['country'] ?? auth()->user()->langauge,
+
         ]);
     }
 }

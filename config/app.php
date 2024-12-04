@@ -236,6 +236,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Packer'    => 'Eusonlito\LaravelPacker\Facade',
+        'Countries' => PeterColes\Countries\CountriesFacade::class,
     ],
 
 ];

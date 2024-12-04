@@ -434,8 +434,11 @@
                                         <div class="form-group row">
                                             <label for="weather_country" class="col-md-6 col-form-label">@lang('group.weather.country')</label>
                                             <div class="col-md-6">
-                                                <input type="text" wire:model.defer="weather.country" id="weather_country" class="form-control @error('country') is-invalid @enderror" />
-                                                @error('country')<div class="invalid-feedback" role="alert">{{$message}}</div>@enderror
+                                                <select wire:model.defer="weather.country" id="weather_country" class="form-control @error('country') is-invalid @enderror">
+                                                    @foreach($countries as $code => $country)
+                                                        <option value="{{ $code }}" @if ($code == $default_country) selected @endif>{{ $country }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="form-group row">
