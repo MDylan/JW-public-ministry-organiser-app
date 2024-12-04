@@ -337,5 +337,20 @@ return [
             'catch_urgent' => 'Továbbítsd neki sürgős üzeneteket',
             
         ]
+    ],
+    'weather' => [
+        'check_settings' => 'Beállítások ellenőrzése',
+        'title' => 'Időjárás előrejelzés',
+        'info' => 'Az időjárás előrejelzés a csoport szolgálati napjainak időjárását mutatja meg. A hírnökök a naptárban láthatják majd a következő 5 nap előrejelzését.',
+        'enable' => 'Időjárás előrejelzés bekapcsolása',
+        'city' => 'Város',
+        'country' => 'Ország',
+        'error' => 'Hiba az időjárás előrejelzés beállításakor.',
+        'error_message' => 'Kérlek add meg a várost és az országot is.',
+        'error_weather_message' => 'Hiba történt az időjárás előrejelzés lekérésekor, próbáld meg később.',
+        'humidity' => 'Páratartalom',
+        'no_data' => 'Nincs elérhető adat',
+        'too_many_requests' => 'Túl sok próbálkozás, kérlek várj 15 percet.',
+        'currently' => 'Jelenleg',
     ]
 ];

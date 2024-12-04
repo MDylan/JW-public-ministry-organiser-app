@@ -49,6 +49,8 @@ class UpdateGroupForm extends AppComponent
     public $disabled_selects = [];
     public $change_date = null;
     public $future_changes = null;
+    public $weather_messages = [];
+    public $weather = [];
 
     public $listeners = [
         'literatureDeleteConfirmed', 
@@ -76,6 +78,11 @@ class UpdateGroupForm extends AppComponent
     public $groupSigns = [];
 
     public function mount(Group $group) {
+
+        $this->weather = [
+            'city' => $group->weather->city ?? null,
+            'country' => $group->weather->country ?? null
+        ];
 
         $this->state = $group->toArray();
         $this->default_colors = config('events.default_colors');
@@ -198,6 +205,20 @@ class UpdateGroupForm extends AppComponent
             'change_date' => 'required|date_format:Y-m-d|after_or_equal:'.date("Y-m-d")
         ])->validate();
 
+        if($this->state['weather_enabled']) {
+            Validator::make($this->weather, [
+                'city' => 'required|string|max:50',
+                'country' => 'required|string|max:2'
+            ])->validate();
+            
+            $weather = pwbs_weather_api_call($this->weather['city'], $this->weather['country']);
+            if(!isset($weather['error'])) {
+                $this->state['city_id'] = $weather['city_id'];
+            } else {
+                $this->state['city_id'] = null;
+            }            
+        }
+
         $pattern = "/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/";
 
         $v = Validator::make($this->state, [
@@ -207,9 +228,9 @@ class UpdateGroupForm extends AppComponent
             'max_publishers' => 'required|numeric|digits_between:1,12|gte:min_publishers',
             'min_time' => 'required|numeric|in:30,60,90,120|lte:max_time',
             'max_time' => 'required|numeric|in:60,90,120,180,240,320,360,420,480|gte:min_time',            
-            // 'need_approval' => 'required|numeric|in:0,1',
+            'need_approval' => 'required|numeric|in:0,1',
             // 'auto_approval' => 'required_if:need_approval,1|numeric|in:0,1',
-            'auto_back' => 'required_if:need_approval,1|numeric|in:0,1',
+            // 'auto_back' => 'required_if:need_approval,1|numeric|in:0,1',
             'color_default' => ['sometimes', 'regex:'.$pattern],
             'color_empty' => ['sometimes', 'regex:'.$pattern],
             'color_someone' => ['sometimes', 'regex:'.$pattern],
@@ -225,6 +246,8 @@ class UpdateGroupForm extends AppComponent
             'messages_on' => 'required|numeric|in:0,1',
             'messages_write' => 'sometimes|numeric|in:0,1',
             'messages_priority' => 'sometimes|numeric|in:0,1',
+            'weather_enabled' => 'required|numeric|in:0,1',
+            'city_id' => 'required_if:weather_enabled,1',
         ]);
 
         $validatedData = $v->validate();
@@ -482,6 +505,40 @@ class UpdateGroupForm extends AppComponent
                 'title' => __('group.literature.save_error'),
                 'message' => __('group.literature.tooShort'),
             ]);
+        }
+    }
+
+    public function checkWeatherSettings() {
+        $this->weather_messages = [];
+        if($this->state['weather_enabled'] == 1) {
+            if(empty($this->weather['city']) || empty($this->weather['country'])) {
+                $this->dispatchBrowserEvent('sweet-error', [
+                    'title' => __('group.weather.error'),
+                    'message' => __('group.weather.error_message'),
+                ]);
+            } else {
+                // $wt = new Weather();
+                // $weather = $wt->get3HourlyByCity($this->state['city'], $this->state['country']);
+
+                $weather = pwbs_weather_api_call($this->weather['city'], $this->weather['country']);
+                //dd($weather);
+                if(empty($weather['current_weather'])) {
+                    $this->dispatchBrowserEvent('sweet-error', [
+                        'title' => __('group.weather.error'),
+                        'message' => __('group.weather.error_weather_message'),
+                    ]);
+                    return;
+                }
+                //dd($weather['forecast_weather']);
+                if(isset($weather['current_weather'])) {
+                    $this->weather_messages = $weather['current_weather'];
+                    // foreach($weather_array['list'] as $weather) {
+                        
+                    // }
+                }
+                //dd($this->weather_messages);
+                //$this->weather_message = $weather;
+            }
         }
     }
 

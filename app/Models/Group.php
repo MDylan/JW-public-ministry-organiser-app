@@ -38,7 +38,9 @@ class Group extends Model
         'messages_write',
         'messages_priority',
         'auto_approval',
-        'auto_back'
+        'auto_back',
+        'city_id',
+        'weather_enabled'
     ];
 
     /**
@@ -278,5 +280,9 @@ class Group extends Model
 
     public function messages() {
         return $this->hasMany(GroupMessage::class);
+    }
+
+    public function weather() {
+        return $this->belongsTo(WeatherCity::class, 'city_id', 'id');
     }
 }

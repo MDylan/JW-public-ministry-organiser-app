@@ -44,6 +44,7 @@ return [
         'use_recaptcha' => 'reCaptcha használata (spam védelem). Bekapcsolásával jelentősen megerősítheted az oldal robotok elleni védelmét. Google recaptchat fog használni a belépésnél és a regisztrációnál az oldal.',
         'use_https' => 'https titkosítás bekapcsolása (Figyelem! Akkor kapcsold be, ha a tárhely szolgáltatód aktiválta a https kapcsolatot. Téves bekapcsolás esetén az oldal nem fog betöltődni!)',
         'show_homepage_alert' => 'Üzenet mutatása a nyitólapon',
+        'weather' => 'Iőjárás előrejelzés funkció bekapcsolása (Az oldal használja az OpenWeather API-t az időjárás előrejelzéshez. Ehhez szükséges az API kulcs megadása a .env fájlban vagy a lenti beállításban.)',
     ],
     'homepage_message' => 'A nyitólapi üzenet tartalma',
     'others_saved'  => 'A beállítások sikeresen mentve lettek.',
@@ -89,4 +90,5 @@ return [
     'there_are_failed_jobs' => 'Egy vagy több ütemezett feladat futtatása során hiba lépett fel. Erről emailben értesítést is kaptál. Próbáld meg újra futtatni őket. Ha továbbra is hiba lép fel, kérjük jelezd a program fejlesztőjének a hibát és küld el neki az email tartalmát.',
     'failed_jobs_retry' => 'Hibás feladatok újrafuttatása',
     'software_url' => 'A szoftver weboldala',
+    'weather_api_key' => 'OpenWeather API kulcs',
 ];

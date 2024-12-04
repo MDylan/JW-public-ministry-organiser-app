@@ -396,6 +396,65 @@
                                 </div>
                             </div>
                         </div> <!-- end of literatures section -->
+                        <!-- Weather section -->
+                        @if (config('weather') == 1)
+                            <div class="card card-primary card-outline">
+                                <div class="card-header">
+                                    <div class="card-title">@lang('group.weather.title')</div>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            @lang('group.weather.info')
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="weather_enabled" class="col-md-6 col-form-label">@lang('group.weather.enable')</label>
+                                        <div class="col-md-6">
+                                            <select wire:model="state.weather_enabled" id="weather_enabled" class="form-control">
+                                                <option value="0">@lang('No')</option>
+                                                <option value="1">@lang('Yes')</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    @if ($state['weather_enabled'] == 1)
+                                        <div class="form-group row">
+                                            <label for="weather_city" class="col-md-6 col-form-label">@lang('group.weather.city')</label>
+                                            <div class="col-md-6">
+                                                <input type="text" wire:model.defer="weather.city" id="weather_city" class="form-control @error('city') is-invalid @enderror @error('city_id') is-invalid @enderror" />
+                                                @error('city')<div class="invalid-feedback" role="alert">{{$message}}</div>@enderror
+                                                @error('city_id')<div class="invalid-feedback" role="alert">{{$message}}</div>@enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="weather_country" class="col-md-6 col-form-label">@lang('group.weather.country')</label>
+                                            <div class="col-md-6">
+                                                <input type="text" wire:model.defer="weather.country" id="weather_country" class="form-control @error('country') is-invalid @enderror" />
+                                                @error('country')<div class="invalid-feedback" role="alert">{{$message}}</div>@enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-md-12 text-right">
+                                                <button type="button" class="btn btn-info" wire:click="checkWeatherSettings">
+                                                    <i class="fas fa-cloud-sun mr-1"></i> @lang('group.weather.check_settings')
+                                                </button>
+                                            </div>
+                                            <div class="col-md-12 text-center mt-4">
+                                                @if(isset($weather_messages['main']))
+                                                @lang('group.weather.currently'): {{ $weather_messages['main']['temp_min'] }}&#8451; / {{ $weather_messages['main']['temp_max'] }}&#8451;, @lang('group.weather.humidity'): {{ $weather_messages['main']['humidity'] }}% <img src="/images/wt_icons/{{ $weather_messages['weather'][0]['icon'] }}@2x.png" width="30" height="30" /> ({{ $weather_messages['weather'][0]['description'] }})
+                                                @endif
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        @endif
+                        <!-- End of weather section -->
                     </div> <!-- end of left section -->
                     <div class="col-lg-6">
                         <div class="card card-primary card-outline">

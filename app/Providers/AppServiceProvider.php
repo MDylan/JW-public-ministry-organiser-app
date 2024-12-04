@@ -42,6 +42,7 @@ class AppServiceProvider extends ServiceProvider
             'default_language' => $default_language,
             'show_homepage_alert' => false,
             'homepage_message' => '',
+            'weather' => false,
         ];
         try {
             $settings = ModelsSettings::all();
@@ -68,6 +69,7 @@ class AppServiceProvider extends ServiceProvider
                 'translatable.fallback_locale' => $defaults['default_language'],
                 'translatable.locales' => $locales,
                 'show_homepage_alert' => $defaults['show_homepage_alert'],
+                'weather' => $defaults['weather'],
                 // 'app.fallback_locale' => $defaults['default_language'],
             ]);
             if($defaults['show_homepage_alert'] == 1) {

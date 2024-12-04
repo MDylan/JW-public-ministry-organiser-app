@@ -34,7 +34,8 @@ class Settings extends AppComponent
         'gdpr' => false,
         'use_https' => false,
         'use_recaptcha' => false,
-        'show_homepage_alert' => false
+        'show_homepage_alert' => false,
+        'weather' => false,
         /*
         !!! Important! 
         If you add new element here, you must set into /app/Providers/AppServiceProvider.php file too, 
@@ -52,7 +53,8 @@ class Settings extends AppComponent
         'MAIL_ENCRYPTION',
         'MAIL_USERNAME',
         'MAIL_PASSWORD',
-        'MAIL_FROM_ADDRESS',        
+        'MAIL_FROM_ADDRESS',
+        'OPENWAETHER_API_KEY'
     ];
 
     public $mailtest = null;

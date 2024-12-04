@@ -22,6 +22,7 @@
         "livewire/livewire": "^2.10.4",
         "pcinaglia/laraupdater": "1.0.2",
         "protonemedia/laravel-verify-new-email": "^1.6",
+        "rakibdevs/openweather-laravel-api": "^1.9",
         "spatie/calendar-links": "^1.6",
         "spatie/laravel-activitylog": "^4.0.0",
         "spatie/laravel-cookie-consent": "^3.1",
@@ -72,7 +73,10 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "platform": {
+            "php": "8.0.9"
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true
