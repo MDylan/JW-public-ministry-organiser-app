@@ -292,12 +292,13 @@ class Events extends AppComponent
             $dates[$date['date']] = $date;
         }
         // dd($dates);
-        if($this->cal_group_data['weather_enabled']) {
+        if($this->cal_group_data['weather_enabled'] && config('weather') == 1) {
             if($this->cal_group_data['weather']['current_weather'] !== null) {
                 $current_weather = json_decode($this->cal_group_data['weather']['current_weather'], true);
                 $this->cal_group_data['weather']['current_weather'] = $current_weather;
 
                 $forecast_weather = json_decode($this->cal_group_data['weather']['forecast_weather'], true);
+                $this->cal_group_data['weather']['forecast_weather'] = $forecast_weather;
                 $forecast_list = array();
                 if(count($forecast_weather['list'])) {
                     foreach($forecast_weather['list'] as $key => $forecast) {
@@ -321,8 +322,16 @@ class Events extends AppComponent
                             if (!isset($forecast_list[$day]['max_temp'])) {
                                 $forecast_list[$day]['max_temp'] = $forecast['main']['temp'];
                             }
+                            if (!isset($forecast_list[$day]['min_wind'])) {
+                                $forecast_list[$day]['min_wind'] = $forecast['wind']['speed'];
+                            }
+                            if (!isset($forecast_list[$day]['max_wind'])) {
+                                $forecast_list[$day]['max_wind'] = $forecast['wind']['speed'];
+                            }
                             $forecast_list[$day]['min_temp'] = min($forecast['main']['temp'], $forecast_list[$day]['min_temp']);
                             $forecast_list[$day]['max_temp'] = max($forecast['main']['temp'], $forecast_list[$day]['max_temp']);
+                            $forecast_list[$day]['min_wind'] = min($forecast['wind']['speed'], $forecast_list[$day]['min_wind']);
+                            $forecast_list[$day]['max_wind'] = max($forecast['wind']['speed'], $forecast_list[$day]['max_wind']);
                             $forecast_list[$day]['description'] = $forecast['weather'][0]['description'];
                             $forecast_list[$day]['icon'] = $forecast['weather'][0]['icon'];
                             $forecast_list[$day]['day_num'] = $weather_time->format("w");

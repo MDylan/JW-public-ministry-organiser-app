@@ -81,7 +81,8 @@ if(!function_exists('pwbs_get_newsletter_roles')) {
 
 if(!function_exists('pwbs_weather_api_call')) {
     function pwbs_weather_api_call(string $city, string $country) {
-
+        if(config('weather') != 1) return;
+        
         $city = ucfirst(trim($city));
         $country = strtoupper(trim($country));
 

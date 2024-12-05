@@ -64,7 +64,7 @@
                                     </nav>
                                 </div>                                
                             </div>
-                            @if ($cal_group_data['weather_enabled'])
+                            @if ($cal_group_data['weather_enabled'] == 1 && config('weather') == 1)
                                 <style>
                                     .weather-container {
                                         position: relative;
@@ -118,8 +118,8 @@
                                     }
                                 </style>
                                 <div class="row my-2">
-                                    {{-- @dump($cal_group_data['weather']['current_weather'])
-                                    @dump($cal_group_data['weather']['forecasts']) --}}
+                                    {{-- @dump($cal_group_data['weather']['forecast_weather']) --}}
+                                    {{-- @dump($cal_group_data['weather']['forecasts']) --}}
                                     <div class="col-12 pt-3">
 
                                         <div class="weather-container mx-2 d-flex justify-content-center">
@@ -129,31 +129,39 @@
 
                                             <div class="weather-widget mx-auto rounded-lg bg-light">
                                                 <!-- Current Weather -->
-                                                <div class="current-weather p-3 border-right">
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="/images/wt_icons/{{ $cal_group_data['weather']['current_weather']['weather'][0]['icon'] }}@2x.png" />
-                                                        <div class="ml-3">
-                                                            <div class="h1 mb-0">{{ number_format($cal_group_data['weather']['current_weather']['main']['temp'], 1) }}&#8451;</div>
-                                                            <div class="text-muted">
-                                                                <div><b>{{ $cal_group_data['weather']['current_weather']['name'] }}</b></div>
-                                                                <div class="font-weight-small">{{ $cal_group_data['weather']['current_weather']['weather'][0]['description'] }}</div>
-                                                                <div class="font-weight-small">Páratartalom: {{ $cal_group_data['weather']['current_weather']['main']['humidity'] }}%</div>
-                                                                <div class="font-weight-small">Szél: {{ number_format($cal_group_data['weather']['current_weather']['wind']['speed'] * 3.6) }} km/h </div>
+                                                @if(isset($cal_group_data['weather']['current_weather']))
+                                                    <div class="current-weather p-3 border-right">
+                                                        <div class="d-flex align-items-center">                                                        
+                                                            <div class="ml-3">
+                                                                <div class="h1 mb-0"><img src="/images/wt_icons/{{ $cal_group_data['weather']['current_weather']['weather'][0]['icon'] }}@2x.png" /> {{ number_format($cal_group_data['weather']['current_weather']['main']['temp'], 1) }}&#8451;</div>
+                                                                <div class="text-muted">
+                                                                    <div><b>{{ $cal_group_data['weather']['current_weather']['name'] }}</b> <span class="font-weight-small">{{ $cal_group_data['weather']['current_weather']['weather'][0]['description'] }}</span></div>
+                                                                    {{-- <div class="font-weight-small">{{ $cal_group_data['weather']['current_weather']['weather'][0]['description'] }}</div> --}}
+                                                                    <div class="font-weight-small">@lang('group.weather.humidity'): {{ $cal_group_data['weather']['current_weather']['main']['humidity'] }}%</div>
+                                                                    <div class="font-weight-small">@lang('group.weather.wind'): {{ number_format($cal_group_data['weather']['current_weather']['wind']['speed'] * 3.6) }} @lang('group.weather.km_h') </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                @endif
                                                 <!-- Forecasts -->
                                                 <div class="d-flex">
-                                                    @foreach ($cal_group_data['weather']['forecasts'] as $day => $forecast)
-                                                        <div class="forecast p-3">
-                                                            <div class="font-weight-bold">{{ $forecast['day'] }}</div>
-                                                            <div class="text-muted font-weight-small">{{ __("event.weekdays_short.".$forecast['day_num']) }}</div>
-                                                            <img src="/images/wt_icons/{{ $forecast['icon'] }}@2x.png" />
-                                                            <div class="font-weight-small">{{ $forecast['description'] }}</div>
-                                                            <div>{{ number_format($forecast['max_temp'], 1) ?? '' }}° {{ number_format($forecast['min_temp'], 1) ?? '' }}°</div>
-                                                        </div>
-                                                    @endforeach
+                                                    @if(isset($cal_group_data['weather']['forecasts']))
+                                                        @foreach ($cal_group_data['weather']['forecasts'] as $day => $forecast)
+                                                            <div class="forecast p-3">
+                                                                <div class="font-weight-bold">{{ $forecast['day'] }} - {{ __("event.weekdays_short.".$forecast['day_num']) }}</div>
+                                                                {{-- <div class="text-muted font-weight-small">{{ __("event.weekdays_short.".$forecast['day_num']) }}</div> --}}
+                                                                <img src="/images/wt_icons/{{ $forecast['icon'] }}@2x.png" />
+                                                                <div class="font-weight-small">{{ $forecast['description'] }}</div>
+                                                                <div>
+                                                                    {{ number_format($forecast['max_temp']) ?? '' }}° 
+                                                                    {{ number_format($forecast['min_temp']) ?? '' }}°
+                                                                    <i class="fa fa-wind"></i> {{ number_format(($forecast['min_wind'] + $forecast['max_wind']) / 2 * 3.6) }} @lang('group.weather.km_h')
+
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
