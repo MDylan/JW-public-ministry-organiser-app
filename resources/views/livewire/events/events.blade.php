@@ -103,12 +103,13 @@
                                         padding: 10px;
                                         cursor: pointer;
                                         z-index: 10;
+                                        display: none;
                                     }
                                     .scroll-btn.left {
                                         left: 0;
                                         border-radius: 0px 5px 5px 0px;
                                     }
-                                    .scroll-btn.right {
+                                    .scroll-btn.right {                                        
                                         right: 0;
                                         border-radius: 5px 0px 0px 5px;
                                     }
@@ -158,7 +159,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <script wire:ignore>
+                                <script>
                                     const widget = document.querySelector('.weather-widget');
                                     const leftBtn = document.querySelector('.scroll-btn.left');
                                     const rightBtn = document.querySelector('.scroll-btn.right');
@@ -212,6 +213,8 @@
 
                                     // Update arrows at startup
                                     updateButtons();
+                                    //Update after window resize
+                                    window.addEventListener('resize', updateButtons);
 
                                 </script>
                                 
