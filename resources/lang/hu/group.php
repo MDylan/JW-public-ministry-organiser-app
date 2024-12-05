@@ -349,8 +349,10 @@ return [
         'error_message' => 'Kérlek add meg a várost és az országot is.',
         'error_weather_message' => 'Hiba történt az időjárás előrejelzés lekérésekor, ellenőrizd az adatokat és próbáld újra.',
         'humidity' => 'Páratartalom',
+        'wind' => 'Szél',
         'no_data' => 'Nincs elérhető adat',
         'too_many_requests' => 'Túl sok próbálkozás, kérlek várj 15 percet.',
         'currently' => 'Jelenleg',
+        'km_h' => 'km/ó',
     ]
 ];
