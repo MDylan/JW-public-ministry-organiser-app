@@ -64,6 +64,158 @@
                                     </nav>
                                 </div>                                
                             </div>
+                            @if ($cal_group_data['weather_enabled'])
+                                <style>
+                                    .weather-container {
+                                        position: relative;
+                                    }
+                                    .weather-widget {
+                                        display: flex;
+                                        overflow: hidden;
+                                        scroll-behavior: smooth;
+                                    }
+                                    .weather-widget .current-weather {
+                                        min-width: 300px;
+                                    }
+                                    .weather-widget .forecast {
+                                        width: 160px;
+                                        text-align: center;
+                                        border-right: 1px solid #ddd;
+                                    }
+                                    .weather-widget .forecast img, 
+                                    .weather-widget .current-weather img {
+                                        max-width: 50px;
+                                        height: auto;
+                                    }
+                                    .weather-widget .font-weight-small {
+                                        font-size: 0.9em;
+                                    }
+                                    .weather-widget .forecast:last-child {
+                                        border-right: none;
+                                    }
+                                    .scroll-btn {
+                                        position: absolute;
+                                        top: 50%;
+                                        transform: translateY(-50%);
+                                        background-color: rgba(0, 0, 0, 0.5);
+                                        color: white;
+                                        border: none;
+                                        padding: 10px;
+                                        cursor: pointer;
+                                        z-index: 10;
+                                    }
+                                    .scroll-btn.left {
+                                        left: 0;
+                                        border-radius: 0px 5px 5px 0px;
+                                    }
+                                    .scroll-btn.right {
+                                        right: 0;
+                                        border-radius: 5px 0px 0px 5px;
+                                    }
+                                    .scroll-btn:hover {
+                                        background-color: rgba(0, 0, 0, 0.7);
+                                    }
+                                </style>
+                                <div class="row my-2">
+                                    {{-- @dump($cal_group_data['weather']['current_weather'])
+                                    @dump($cal_group_data['weather']['forecasts']) --}}
+                                    <div class="col-12 pt-3">
+
+                                        <div class="weather-container mx-2 d-flex justify-content-center">
+                                                <!-- Arrows for scolling -->
+                                                <button class="scroll-btn left"><i class="fa fa-arrow-left"></i></button>
+                                                <button class="scroll-btn right"><i class="fa fa-arrow-right"></i></button>
+
+                                            <div class="weather-widget mx-auto rounded-lg bg-light">
+                                                <!-- Current Weather -->
+                                                <div class="current-weather p-3 border-right">
+                                                    <div class="d-flex align-items-center">
+                                                        <img src="/images/wt_icons/{{ $cal_group_data['weather']['current_weather']['weather'][0]['icon'] }}@2x.png" />
+                                                        <div class="ml-3">
+                                                            <div class="h1 mb-0">{{ number_format($cal_group_data['weather']['current_weather']['main']['temp'], 1) }}&#8451;</div>
+                                                            <div class="text-muted">
+                                                                <div><b>{{ $cal_group_data['weather']['current_weather']['name'] }}</b></div>
+                                                                <div class="font-weight-small">{{ $cal_group_data['weather']['current_weather']['weather'][0]['description'] }}</div>
+                                                                <div class="font-weight-small">Páratartalom: {{ $cal_group_data['weather']['current_weather']['main']['humidity'] }}%</div>
+                                                                <div class="font-weight-small">Szél: {{ number_format($cal_group_data['weather']['current_weather']['wind']['speed'] * 3.6) }} km/h </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Forecasts -->
+                                                <div class="d-flex">
+                                                    @foreach ($cal_group_data['weather']['forecasts'] as $day => $forecast)
+                                                        <div class="forecast p-3">
+                                                            <div class="font-weight-bold">{{ $forecast['day'] }}</div>
+                                                            <div class="text-muted font-weight-small">{{ __("event.weekdays_short.".$forecast['day_num']) }}</div>
+                                                            <img src="/images/wt_icons/{{ $forecast['icon'] }}@2x.png" />
+                                                            <div class="font-weight-small">{{ $forecast['description'] }}</div>
+                                                            <div>{{ number_format($forecast['max_temp'], 1) ?? '' }}° {{ number_format($forecast['min_temp'], 1) ?? '' }}°</div>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <script wire:ignore>
+                                    const widget = document.querySelector('.weather-widget');
+                                    const leftBtn = document.querySelector('.scroll-btn.left');
+                                    const rightBtn = document.querySelector('.scroll-btn.right');
+
+                                    // Scroll by arrows
+                                    leftBtn.addEventListener('click', () => {
+                                        widget.scrollBy({ left: -200, behavior: 'smooth' });
+                                        updateButtons();
+                                    });
+
+                                    rightBtn.addEventListener('click', () => {
+                                        widget.scrollBy({ left: 200, behavior: 'smooth' });
+                                        updateButtons();
+                                    });
+
+                                    // Update after scroll
+                                    widget.addEventListener('scroll', updateButtons);
+
+                                    // Arrows visibility update
+                                    function updateButtons() {
+                                        const maxScrollLeft = widget.scrollWidth - widget.clientWidth;
+
+                                        if (widget.scrollLeft <= 0) {
+                                            leftBtn.style.display = 'none';
+                                        } else {
+                                            leftBtn.style.display = 'block';
+                                        }
+
+                                        if (widget.scrollLeft >= maxScrollLeft) {
+                                            rightBtn.style.display = 'none';
+                                        } else {
+                                            rightBtn.style.display = 'block';
+                                        }
+                                    }
+
+                                    // Touch events
+                                    let startX = 0;
+                                    let scrollLeft = 0;
+
+                                    widget.addEventListener('touchstart', (e) => {
+                                        startX = e.touches[0].pageX;
+                                        scrollLeft = widget.scrollLeft;
+                                    });
+
+                                    widget.addEventListener('touchmove', (e) => {
+                                        const x = e.touches[0].pageX;
+                                        const walk = startX - x;
+                                        widget.scrollLeft = scrollLeft + walk;
+                                        updateButtons();
+                                    });
+
+                                    // Update arrows at startup
+                                    updateButtons();
+
+                                </script>
+                                
+                            @endif
                         </div>
                         <div class="card-body p-2">
                             <table class="table table-bordered eventsTable">

@@ -283,12 +283,56 @@ class Events extends AppComponent
             'disabled_slots',
             'dates' => function($q) {
                 $q->whereBetween('date', [$this->first_day, $this->last_day]);
-            }
+            },
+            'weather'
         ])->first()->toArray();
         // dd($this->cal_group_data);
         $dates = [];
         foreach($this->cal_group_data['dates'] as $date) {
             $dates[$date['date']] = $date;
+        }
+        // dd($dates);
+        if($this->cal_group_data['weather_enabled']) {
+            if($this->cal_group_data['weather']['current_weather'] !== null) {
+                $current_weather = json_decode($this->cal_group_data['weather']['current_weather'], true);
+                $this->cal_group_data['weather']['current_weather'] = $current_weather;
+
+                $forecast_weather = json_decode($this->cal_group_data['weather']['forecast_weather'], true);
+                $forecast_list = array();
+                if(count($forecast_weather['list'])) {
+                    foreach($forecast_weather['list'] as $key => $forecast) {
+                        $weather_time = Carbon::parse($forecast['dt_txt'], "UTC");
+                        $day = $weather_time->format("Y-m-d");
+                        if(!isset($dates[$day])) {
+                            //forecast only for sevice days
+                            continue;
+                        } else {
+                            $start_time = Carbon::parse($dates[$day]['date_start']);
+                            $end_time = Carbon::parse($dates[$day]['date_end']);
+
+                            if($weather_time->lt($start_time) || $weather_time->gt($end_time)) {
+                                //forecast only for sevice days
+                                continue;
+                            }
+
+                            if (!isset($forecast_list[$day]['min_temp'])) {
+                                $forecast_list[$day]['min_temp'] = $forecast['main']['temp'];
+                            }
+                            if (!isset($forecast_list[$day]['max_temp'])) {
+                                $forecast_list[$day]['max_temp'] = $forecast['main']['temp'];
+                            }
+                            $forecast_list[$day]['min_temp'] = min($forecast['main']['temp'], $forecast_list[$day]['min_temp']);
+                            $forecast_list[$day]['max_temp'] = max($forecast['main']['temp'], $forecast_list[$day]['max_temp']);
+                            $forecast_list[$day]['description'] = $forecast['weather'][0]['description'];
+                            $forecast_list[$day]['icon'] = $forecast['weather'][0]['icon'];
+                            $forecast_list[$day]['day_num'] = $weather_time->format("w");
+                            $forecast_list[$day]['day'] = $weather_time->format("m.d");
+                        }                        
+                    }
+                }
+                // dd($forecast_list);
+                $this->cal_group_data['weather']['forecasts'] = $forecast_list;
+            }
         }
         // $service_days = [];
         // foreach($this->cal_group_data['days'] as $day) {
